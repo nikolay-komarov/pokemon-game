@@ -4,9 +4,9 @@ const Layout = (props) => {
   const {
     id,
     title,
-    descr,
     urlBg,
-    colorBg
+    colorBg,
+    children
   } = props;
 
   const styleRoot = {};
@@ -29,9 +29,9 @@ const Layout = (props) => {
             </div>
           }
           {
-            descr &&
-            <div className={s.desc + ' ' + s.full}>
-              <p>{descr}</p>
+            children &&
+            <div className={`${s.desc} ${s.full}`}>
+              {children}
             </div>
           }
         </article>

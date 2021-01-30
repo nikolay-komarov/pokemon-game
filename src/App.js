@@ -144,27 +144,33 @@ const App = () => {
   return (
     <>
       <Header
-        title="This is title"
-        descr="This is Description!"
+        title="Pokemon Game"
+        descr="This is a simple triple triad card game"
       />
       <Layout
         id="1"
-        title="title_01"
-        descr="descr_01"
+        title="layout title 01"
         urlBg={bg1}
-      />
+      >
+        <p>In the game two players face off against one another, one side playing as "blue", the other as "red" on a 3x3 grid.</p>
+        <p>Each player has five cards in a hand and the aim is to capture the opponent's cards by turning them into the player's own color of red or blue.</p>
+      </Layout>
       <Layout
         id="2"
-        title="title_02"
-        descr="descr_02"
+        title="layout title 02"
         colorBg="yellow"
-      />
+      >
+        <p>In the game two players face off against one another, one side playing as "blue", the other as "red" on a 3x3 grid.</p>
+        <p>Each player has five cards in a hand and the aim is to capture the opponent's cards by turning them into the player's own color of red or blue.</p>
+      </Layout>
       <Layout
         id="3"
-        title="title_03"
-        descr="descr_03"
+        title="layout title 03"
         urlBg={bg3}
-      />
+      >
+        <p>In the game two players face off against one another, one side playing as "blue", the other as "red" on a 3x3 grid.</p>
+        <p>Each player has five cards in a hand and the aim is to capture the opponent's cards by turning them into the player's own color of red or blue.</p>
+      </Layout>
       <Footer />
     </>
   );
