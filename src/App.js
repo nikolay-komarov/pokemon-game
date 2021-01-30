@@ -160,6 +160,7 @@ const App = () => {
       <Layout
         id="2"
         title="layout title 02"
+        titleColor="#FFFFFF"
         colorBg="#202736"
       >
         <div className="flex">
