@@ -25,7 +25,7 @@ const PokemonCard = ({name, img, id, type, values}) => {
               <div className={s.info}>
                 <span className={s.number}>#{id}</span>
                 <h3 className={s.name}>{name}</h3>
-                <small className={s.type}>Type: <span>{type}</span></small>
+                <small className={s[type]}>Type: <span>{type}</span></small>
               </div>
             </div>
           </div>
