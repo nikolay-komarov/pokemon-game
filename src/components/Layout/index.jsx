@@ -1,17 +1,10 @@
 import s from './style.module.css';
 
-const Layout = (props) => {
-  const {
-    id,
-    title,
-    descr,
-    urlBg,
-    colorBg
-  } = props;
-
+const Layout = ({id, title, titleColor, urlBg, colorBg, children}) => {
   const styleRoot = {};
   if (urlBg) styleRoot.backgroundImage = `url(${urlBg})`;
   if (colorBg) styleRoot.backgroundColor = colorBg;
+  const styleTitle = {color: `${titleColor ? titleColor :'#000000'}`};
 
   return (
     <section
@@ -24,14 +17,14 @@ const Layout = (props) => {
           {
             title &&
             <div className={s.title}>
-              <h3>{title}</h3>
+              <h3 style={styleTitle}>{title}</h3>
               <span className={s.separator}/>
             </div>
           }
           {
-            descr &&
-            <div className={s.desc + ' ' + s.full}>
-              <p>{descr}</p>
+            children &&
+            <div className={`${s.desc} ${s.full}`}>
+              {children}
             </div>
           }
         </article>
