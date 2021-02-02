@@ -6,7 +6,7 @@ import cn from 'classnames';
 const PokemonCard = ({name, img, id, type, values}) => {
   const [isActive, setActive] = useState(false);
   const handleClick = () => {
-    setActive(true);
+    setActive(prevState => !prevState);
   };
   return (
     <div className={s.root} onClick={handleClick}>
