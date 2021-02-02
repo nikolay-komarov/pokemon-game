@@ -6,7 +6,8 @@ const Menu = ({isActive}) => {
   return (
     <div className={cn(s.menuContainer, isActive ? s.active : s.deactive)}>
       <div className={s.overlay}/>
-      <div className={s.menuItems}>
+      {/*<div className={s.menuItems}> - menuItems undefined*/}
+      <div>
         <ul>
           <li>
             <a href="#welcome">

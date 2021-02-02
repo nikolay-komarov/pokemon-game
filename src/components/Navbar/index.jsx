@@ -3,16 +3,16 @@ import cn from 'classnames';
 
 const Navbar = ({isMenuActive, changeMenuActive}) => {
   const handleMenuButtonClick = () => {
-    changeMenuActive();
+    changeMenuActive && changeMenuActive();
   }
   return (
-    <nav id={s.navbar}>
+    <nav id={s.navbar} className={cn({[s.bgActive]: isMenuActive})}>
       <div className={s.navWrapper}>
         <p className={s.brand}>
           LOGO
         </p>
         <a
-          className={cn(s.menuButton, isMenuActive ? s.active : '')}
+          className={cn(s.menuButton, {[s.active]: isMenuActive})}
           onClick={handleMenuButtonClick}
         >
           <span/>
