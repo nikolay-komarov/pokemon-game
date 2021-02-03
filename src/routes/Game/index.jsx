@@ -1,3 +1,5 @@
+import MenuHeader from "../../components/MenuHeader";
+import s from './style.module.css';
 
 const GamePage = ({onChangePage}) => {
   const handleClick = () => {
@@ -5,13 +7,16 @@ const GamePage = ({onChangePage}) => {
   };
 
   return (
-    <div>
-      This is GamePage!
-      <button
-      onClick={handleClick}>
-        to Home
-      </button>
-    </div>
+    <>
+      <MenuHeader bgActive={true} />
+      <div className={s.root}>
+        This is GamePage!
+        <button
+        onClick={handleClick}>
+          to Home
+        </button>
+      </div>
+    </>
   );
 };
 
