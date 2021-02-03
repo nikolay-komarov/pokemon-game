@@ -1,4 +1,5 @@
 import s from './style.module.css';
+import cn from 'classnames';
 
 const Layout = ({id, title, titleColor, urlBg, colorBg, children}) => {
   const styleRoot = {};
@@ -23,7 +24,7 @@ const Layout = ({id, title, titleColor, urlBg, colorBg, children}) => {
           }
           {
             children &&
-            <div className={`${s.desc} ${s.full}`}>
+            <div className={cn(s.desc, s.full)}>
               {children}
             </div>
           }
