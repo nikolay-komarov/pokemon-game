@@ -1,31 +1,28 @@
+import {Link} from "react-router-dom";
+
 import s from './style.module.css';
 import cn from 'classnames';
 
 const MENU = [
   {
     title: 'HOME',
-    to: '#welcome'
+    to: '/home'
   },
   {
     title: 'GAME',
-    to: '#game'
-  },
-  {
-    title: 'HOME',
-    to: '#welcome'
+    to: '/game'
   },
   {
     title: 'ABOUT',
-    to: '#about'
+    to: '/about'
   },
   {
     title: 'CONTACT',
-    to: '#contact'
+    to: '/contact'
   }
 ];
 
-const Menu = ({isOpen}) => {
-  // TODO: add links for menuItems
+const Menu = ({isOpen, onClickHamburg}) => {
   return (
     <div className={cn(s.menuContainer, {
       [s.active]: isOpen === true,
@@ -37,9 +34,9 @@ const Menu = ({isOpen}) => {
           {
             MENU.map(({title, to}, index) => (
               <li key={index}>
-                <a href={to}>
-                  {title}
-                </a>
+                <Link to={to} onClick={onClickHamburg}>
+                    {title}
+                </Link>
               </li>
             ))
           }

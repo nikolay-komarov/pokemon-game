@@ -1,8 +1,6 @@
 import Header from "../../components/Header";
 import Layout from "../../components/Layout";
-import Footer from "../../components/Footer";
 import PokemonCard from "../../components/PokemonCard";
-import MenuHeader from "../../components/MenuHeader";
 
 import s from './style.module.css';
 
@@ -144,18 +142,12 @@ const POKEMONS = [
   }
 ];
 
-const HomePage = ({onChangePage}) => {
-  const handleClickButton = (page) => {
-    onChangePage && onChangePage(page);
-  };
-
+const HomePage = () => {
   return (
     <>
-      <MenuHeader />
       <Header
         title="Pokemon Game"
         descr="This is a simple triple triad card game"
-        onClickButton={handleClickButton}
       />
       <Layout
         id="1"
@@ -193,7 +185,6 @@ const HomePage = ({onChangePage}) => {
         <p>In the game two players face off against one another, one side playing as "blue", the other as "red" on a 3x3 grid.</p>
         <p>Each player has five cards in a hand and the aim is to capture the opponent's cards by turning them into the player's own color of red or blue.</p>
       </Layout>
-      <Footer />
     </>
   );
 }
