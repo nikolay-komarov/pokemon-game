@@ -3,24 +3,7 @@ import {Link} from "react-router-dom";
 import s from './style.module.css';
 import cn from 'classnames';
 
-const MENU = [
-  {
-    title: 'HOME',
-    to: '/home'
-  },
-  {
-    title: 'GAME',
-    to: '/game'
-  },
-  {
-    title: 'ABOUT',
-    to: '/about'
-  },
-  {
-    title: 'CONTACT',
-    to: '/contact'
-  }
-];
+import {MENU} from "../../const";
 
 const Menu = ({isOpen, onClickHamburg}) => {
   return (
