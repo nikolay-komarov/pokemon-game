@@ -1,11 +1,11 @@
-import {useState} from 'react';
+import {useState, useEffect} from 'react';
 import {useHistory} from 'react-router-dom';
 
 import PokemonCard from "../../components/PokemonCard";
 
-import s from "./style.module.css";
+import database from "../../service/firebase.js";
 
-import {POKEMONS} from "../../mocks/pokemons";
+import s from "./style.module.css";
 
 const GamePage = () => {
   const history = useHistory();
@@ -13,27 +13,32 @@ const GamePage = () => {
     history.push('/');
   };
 
-  const [pokemons, setPokemons] = useState(() => {
-    return (
-      POKEMONS.map(item => {
-        return {
-          ...item,
-          isActive: false,
-        }
-      })
-    );
-  });
+  const [pokemons, setPokemons] = useState({});
+
+  useEffect(() => {
+    database.ref('pokemons').once('value', (snapshot) => {
+      setPokemons(snapshot.val());
+    });
+  }, []);
 
   const handlePokemonCardClick = (id) => {
-    setPokemons((prevState) => {
-      return (
-        prevState.map(item => {
-          return({
-            ...item,
-            isActive: (item.id === id) ? !item.isActive : item.isActive
-          });
-        })
-      );
+    console.log('click');
+    setPokemons(prevState => {
+      const state = Object.entries(prevState).reduce((acc, item) => {
+        const pokemon = {...item[1]};
+        if (pokemon.id === id) {
+          pokemon.isActive = (pokemon.isActive) ? !pokemon.isActive : true;
+          database.ref('pokemons/' + item[0]).set(pokemon);
+        };
+
+        acc[item[0]] = pokemon;
+
+        return acc;
+      }, {});
+
+      console.log(state);
+
+      return state;
     });
   };
 
@@ -47,7 +52,7 @@ const GamePage = () => {
       </div>
       <div className={s.flex}>
         {
-          pokemons.map(item =>
+          Object.entries(pokemons).map(([key, item]) =>
             <PokemonCard
               key={item.id}
               name={item.name}
