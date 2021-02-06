@@ -2,18 +2,19 @@ import {useState, useEffect} from 'react';
 import {useHistory} from 'react-router-dom';
 
 import PokemonCard from "../../components/PokemonCard";
+import Button from "../../components/Button";
 
 import database from "../../service/firebase.js";
-import {random} from "../../service/utils";
+import {random} from "../../service/utils.js";
 
 import s from "./style.module.css";
 
-import {POKEMONS} from "../../mocks/pokemons";
-import Button from "../../components/Button";
+import {POKEMONS} from "../../mocks/pokemons.js";
+import {RANDOM_ID_MIN_MAX} from "../../const.js";
 
 const GamePage = () => {
   const history = useHistory();
-  const handleClick = () => {
+  const handleToHomeClick = () => {
     history.push('/');
   };
 
@@ -46,7 +47,7 @@ const GamePage = () => {
   const handleAddPokemonClick = () => {
     const newPokemon = {
       ...POKEMONS[0],
-      id: random(200,100)
+      id: random(RANDOM_ID_MIN_MAX.MIN, RANDOM_ID_MIN_MAX.MAX)
     };
 
     const newKey = database.ref().child('pokemons').push().key;
@@ -58,6 +59,10 @@ const GamePage = () => {
 
   return (
     <>
+      <div>
+        <h1>This is GamePage!</h1>
+        <Button title="to Home" onClick={handleToHomeClick} />
+      </div>
       <div className={s.buttonWrap}>
         <Button title="Add New Pokemon" onClick={handleAddPokemonClick} />
       </div>
