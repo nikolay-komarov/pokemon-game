@@ -1,0 +1,26 @@
+.btn {
+    min-width: 100px;
+    font-family: inherit;
+    font-size: 24px;
+    font-weight: normal;
+    line-height: 28px;
+    box-sizing: border-box;
+    border: none;
+    background-color: #ff00ff;
+    padding: 10px 20px;
+    color: #FFFFFF;
+    cursor: pointer;
+}
+
+.btn:hover {
+    background-color: #a001a0;
+}
+
+.btn:focus {
+    outline: none;
+}
+
+.btn:active {
+    outline: none;
+    box-shadow: 0 0 0 2px #640164;
+}

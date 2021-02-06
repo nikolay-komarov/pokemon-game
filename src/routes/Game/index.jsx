@@ -9,6 +9,7 @@ import {random} from "../../service/utils";
 import s from "./style.module.css";
 
 import {POKEMONS} from "../../mocks/pokemons";
+import Button from "../../components/Button";
 
 const GamePage = () => {
   const history = useHistory();
@@ -57,16 +58,8 @@ const GamePage = () => {
 
   return (
     <>
-      <div>
-        <h1>This is GamePage!</h1>
-        <button onClick={handleClick}>
-          to Home
-        </button>
-      </div>
       <div className={s.buttonWrap}>
-        <button onClick={handleAddPokemonClick}>
-          Add Pokemon
-        </button>
+        <Button title="Add New Pokemon" onClick={handleAddPokemonClick} />
       </div>
       <div className={s.flex}>
         {
