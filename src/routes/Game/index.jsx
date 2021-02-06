@@ -4,8 +4,11 @@ import {useHistory} from 'react-router-dom';
 import PokemonCard from "../../components/PokemonCard";
 
 import database from "../../service/firebase.js";
+import {random} from "../../service/utils";
 
 import s from "./style.module.css";
+
+import {POKEMONS} from "../../mocks/pokemons";
 
 const GamePage = () => {
   const history = useHistory();
@@ -22,7 +25,6 @@ const GamePage = () => {
   }, []);
 
   const handlePokemonCardClick = (id) => {
-    console.log('click');
     setPokemons(prevState => {
       const state = Object.entries(prevState).reduce((acc, item) => {
         const pokemon = {...item[1]};
@@ -36,9 +38,20 @@ const GamePage = () => {
         return acc;
       }, {});
 
-      console.log(state);
-
       return state;
+    });
+  };
+
+  const handleAddPokemonClick = () => {
+    const newPokemon = {
+      ...POKEMONS[0],
+      id: random(200,100)
+    };
+
+    const newKey = database.ref().child('pokemons').push().key;
+    database.ref('pokemons/' + newKey).set(newPokemon);
+    database.ref('pokemons').once('value', (snapshot) => {
+      setPokemons(snapshot.val());
     });
   };
 
@@ -48,6 +61,11 @@ const GamePage = () => {
         <h1>This is GamePage!</h1>
         <button onClick={handleClick}>
           to Home
+        </button>
+      </div>
+      <div className={s.buttonWrap}>
+        <button onClick={handleAddPokemonClick}>
+          Add Pokemon
         </button>
       </div>
       <div className={s.flex}>
