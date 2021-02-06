@@ -1,34 +1,28 @@
+import {Link} from "react-router-dom";
+
 import s from './style.module.css';
 import cn from 'classnames';
 
-const Menu = ({isActive}) => {
-  // TODO: add links for menuItems
+import {MENU} from "../../const";
+
+const Menu = ({isOpen, onClickHamburg}) => {
   return (
-    <div className={cn(s.menuContainer, isActive ? s.active : s.deactive)}>
-      <div className={s.overlay}/>
-      {/*<div className={s.menuItems}> - menuItems undefined*/}
+    <div className={cn(s.menuContainer, {
+      [s.active]: isOpen === true,
+      [s.deactive]: isOpen === false
+    })}>
+      <div className={s.overlay} />
       <div>
         <ul>
-          <li>
-            <a href="#welcome">
-              HOME
-            </a>
-          </li>
-          <li>
-            <a href="#game">
-              GAME
-            </a>
-          </li>
-          <li>
-            <a href="#about">
-              ABOUT
-            </a>
-          </li>
-          <li>
-            <a href="#contact">
-              CONTACT
-            </a>
-          </li>
+          {
+            MENU.map(({title, to}, index) => (
+              <li key={index}>
+                <Link to={to} onClick={onClickHamburg}>
+                    {title}
+                </Link>
+              </li>
+            ))
+          }
         </ul>
       </div>
     </div>
