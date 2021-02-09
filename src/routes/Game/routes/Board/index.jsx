@@ -1,9 +1,38 @@
+import {useContext} from 'react';
+
+import {PokemonContext} from "../../../../context/pokemonContext";
+
 import s from './style.module.css';
+import PokemonCard from "../../../../components/PokemonCard";
+
 
 const BoardPage = () => {
+  const pokemonsContext = useContext(PokemonContext);
+  const pokemons = pokemonsContext.pokemonsForGame;
+
+  const handlePokemonCardClick = (id) => {
+    console.log('click');
+  }
+
   return (
     <div className={s.root}>
       <div className={s.playerOne}>
+        {
+          pokemons.map(item => (
+            <PokemonCard
+              key={item.id}
+              name={item.name}
+              img={item.img}
+              id={item.id}
+              type={item.type}
+              values={item.values}
+              isActive={true}
+              isSelected={false}
+              minimize={true}
+              onPokemonCardClick={handlePokemonCardClick}
+            />
+          ))
+        }
 
       </div>
       <div className={s.board}>

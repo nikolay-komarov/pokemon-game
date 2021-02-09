@@ -5,27 +5,24 @@ import PokemonCard from "../../../../components/PokemonCard";
 import Button from "../../../../components/Button";
 
 import {FirebaseContext} from "../../../../context/firebaseContext";
-
-import {random} from "../../../../service/utils.js";
-import {RANDOM_ID_MIN_MAX} from "../../../../const.js";
+import {PokemonContext} from "../../../../context/pokemonContext";
 
 import s from "./style.module.css";
 
-import {POKEMONS} from "../../../../mocks/pokemons.js";
-
 const StartPage = () => {
   const history = useHistory();
-  const handleToHomeClick = () => {
-    history.push('/');
+  const handleToStartGameClick = () => {
+    history.push('/game/board');
   };
 
-  const firebase = useContext(FirebaseContext);
+  const firebaseContext = useContext(FirebaseContext);
+  const pokemonsContext = useContext(PokemonContext);
 
   const [pokemons, setPokemons] = useState({});
 
   useEffect(() => {
-    firebase.getPokemonsSoket((pokemons) => {
-      setPokemons(pokemons)
+    firebaseContext.getPokemonsSoket((pokemons) => {
+      setPokemons(pokemons);
     });
   }, []);
 
@@ -34,8 +31,9 @@ const StartPage = () => {
       return Object.entries(prevState).reduce((acc, item) => {
         const pokemon = {...item[1]};
         if (pokemon.id === id) {
-          pokemon.isActive = (pokemon.isActive) ? !pokemon.isActive : true;
-          firebase.postPokemon(item[0], pokemon);
+          // pokemon.isActive = (pokemon.isActive) ? !pokemon.isActive : true;
+          pokemon.isSelected = (pokemon.isSelected) ? !pokemon.isSelected : true;
+          pokemonsContext.onSelectPokemon(pokemon);
         };
 
         acc[item[0]] = pokemon;
@@ -45,23 +43,12 @@ const StartPage = () => {
     });
   };
 
-  const handleAddPokemonClick = () => {
-    const newPokemon = {
-      ...POKEMONS[0],
-      id: random(RANDOM_ID_MIN_MAX.MIN, RANDOM_ID_MIN_MAX.MAX)
-    };
-
-    firebase.addPokemon(newPokemon);
-  };
-
   return (
     <>
-      <div>
-        <h1>This is GamePage!</h1>
-        <Button title="to Home" onClick={handleToHomeClick} />
-      </div>
       <div className={s.buttonWrap}>
-        <Button title="Add New Pokemon" onClick={handleAddPokemonClick} />
+        <Button
+          title="Start Game"
+          onClick={handleToStartGameClick} />
       </div>
       <div className={s.flex}>
         {
@@ -73,7 +60,9 @@ const StartPage = () => {
               id={item.id}
               type={item.type}
               values={item.values}
-              isActive={item.isActive}
+              isActive={true}
+              isSelected={item.isSelected}
+              minimize={false}
               onPokemonCardClick={handlePokemonCardClick}
             />)
         }
