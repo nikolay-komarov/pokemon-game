@@ -23,13 +23,10 @@ const GamePage = () => {
 
   const [pokemons, setPokemons] = useState({});
 
-  const getPokemons = async () => {
-    const response = await firebase.getPokemonsOnce();
-    setPokemons(response);
-  };
-
   useEffect(() => {
-    getPokemons();
+    firebase.getPokemonsSoket((pokemons) => {
+      setPokemons(pokemons)
+    });
   }, []);
 
   const handlePokemonCardClick = (id) => {
@@ -54,9 +51,7 @@ const GamePage = () => {
       id: random(RANDOM_ID_MIN_MAX.MIN, RANDOM_ID_MIN_MAX.MAX)
     };
 
-    firebase.addPokemon(newPokemon, async () => {
-      await getPokemons();
-    });
+    firebase.addPokemon(newPokemon);
   };
 
   return (
