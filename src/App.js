@@ -1,7 +1,7 @@
 import {Switch, Route, useRouteMatch, Redirect} from "react-router-dom";
 
 import HomePage from "./routes/Home";
-import GamePage from "./routes/Game";
+import GamePage from "./routes/Game/";
 import AboutPage from "./routes/About";
 import ContactPage from "./routes/Contact";
 import NotFoundPage from "./routes/NotFound";
