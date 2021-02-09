@@ -1,16 +1,17 @@
-import {useState, useEffect} from 'react';
+import {useState, useEffect, useContext} from 'react';
 import {useHistory} from 'react-router-dom';
 
 import PokemonCard from "../../components/PokemonCard";
 import Button from "../../components/Button";
 
-import database from "../../service/firebase.js";
+import {FirebaseContext} from "../../context/firebaseContext";
+
 import {random} from "../../service/utils.js";
+import {RANDOM_ID_MIN_MAX} from "../../const.js";
 
 import s from "./style.module.css";
 
 import {POKEMONS} from "../../mocks/pokemons.js";
-import {RANDOM_ID_MIN_MAX} from "../../const.js";
 
 const GamePage = () => {
   const history = useHistory();
@@ -18,29 +19,32 @@ const GamePage = () => {
     history.push('/');
   };
 
+  const firebase = useContext(FirebaseContext);
+
   const [pokemons, setPokemons] = useState({});
 
+  const getPokemons = async () => {
+    const response = await firebase.getPokemonsOnce();
+    setPokemons(response);
+  };
+
   useEffect(() => {
-    database.ref('pokemons').once('value', (snapshot) => {
-      setPokemons(snapshot.val());
-    });
+    getPokemons();
   }, []);
 
   const handlePokemonCardClick = (id) => {
     setPokemons(prevState => {
-      const state = Object.entries(prevState).reduce((acc, item) => {
+      return Object.entries(prevState).reduce((acc, item) => {
         const pokemon = {...item[1]};
         if (pokemon.id === id) {
           pokemon.isActive = (pokemon.isActive) ? !pokemon.isActive : true;
-          database.ref('pokemons/' + item[0]).set(pokemon);
+          firebase.postPokemon(item[0], pokemon);
         };
 
         acc[item[0]] = pokemon;
 
         return acc;
       }, {});
-
-      return state;
     });
   };
 
@@ -50,10 +54,8 @@ const GamePage = () => {
       id: random(RANDOM_ID_MIN_MAX.MIN, RANDOM_ID_MIN_MAX.MAX)
     };
 
-    const newKey = database.ref().child('pokemons').push().key;
-    database.ref('pokemons/' + newKey).set(newPokemon);
-    database.ref('pokemons').once('value', (snapshot) => {
-      setPokemons(snapshot.val());
+    firebase.addPokemon(newPokemon, async () => {
+      await getPokemons();
     });
   };
 
@@ -70,7 +72,7 @@ const GamePage = () => {
         {
           Object.entries(pokemons).map(([key, item]) =>
             <PokemonCard
-              key={item.id}
+              key={key}
               name={item.name}
               img={item.img}
               id={item.id}
