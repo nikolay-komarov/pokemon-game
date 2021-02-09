@@ -16,3 +16,8 @@ export const MENU = [
     to: '/contact'
   }
 ];
+
+export const RANDOM_ID_MIN_MAX = {
+  MIN: 100,
+  MAX: 200
+};

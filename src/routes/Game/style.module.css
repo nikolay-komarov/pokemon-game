@@ -4,3 +4,9 @@
     align-items: center;
     flex-wrap: wrap;
 }
+
+.buttonWrap {
+    display: flex;
+    justify-content: center;
+    padding: 20px 0;
+}
