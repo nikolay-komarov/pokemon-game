@@ -11,12 +11,14 @@ import s from "./style.module.css";
 
 const StartPage = () => {
   const history = useHistory();
-  const handleToStartGameClick = () => {
+  const handleStartGameClick = () => {
     history.push('/game/board');
   };
 
   const firebaseContext = useContext(FirebaseContext);
   const pokemonsContext = useContext(PokemonContext);
+
+  console.log('pokemonContext', pokemonsContext);
 
   const [pokemons, setPokemons] = useState({});
 
@@ -24,23 +26,21 @@ const StartPage = () => {
     firebaseContext.getPokemonsSoket((pokemons) => {
       setPokemons(pokemons);
     });
+
+    return () => firebaseContext.offPokemonsSoket();
   }, []);
 
-  const handlePokemonCardClick = (id) => {
-    setPokemons(prevState => {
-      return Object.entries(prevState).reduce((acc, item) => {
-        const pokemon = {...item[1]};
-        if (pokemon.id === id) {
-          // pokemon.isActive = (pokemon.isActive) ? !pokemon.isActive : true;
-          pokemon.isSelected = (pokemon.isSelected) ? !pokemon.isSelected : true;
-          pokemonsContext.onSelectPokemon(pokemon);
-        };
+  const handleActiveSelected = (key) => {
+    const pokemon = {...pokemons[key]};
+    pokemonsContext.onSelectedPokemons(key, pokemon);
 
-        acc[item[0]] = pokemon;
-
-        return acc;
-      }, {});
-    });
+    setPokemons((prevState) => ({
+      ...prevState,
+      [key]: {
+        ...prevState[key],
+        selected: !prevState[key].selected,
+      }
+    }));
   };
 
   return (
@@ -48,7 +48,9 @@ const StartPage = () => {
       <div className={s.buttonWrap}>
         <Button
           title="Start Game"
-          onClick={handleToStartGameClick} />
+          disabled={(Object.keys(pokemonsContext.pokemons).length < 5)}
+          onClick={handleStartGameClick}
+        />
       </div>
       <div className={s.flex}>
         {
@@ -61,9 +63,14 @@ const StartPage = () => {
               type={item.type}
               values={item.values}
               isActive={true}
-              isSelected={item.isSelected}
+              isSelected={item.selected}
+              classsName={s.card}
               minimize={false}
-              onPokemonCardClick={handlePokemonCardClick}
+              onPokemonCardClick={() => {
+                if ((Object.keys(pokemonsContext.pokemons).length < 5) || item.selected) {
+                  handleActiveSelected(key)
+                }
+              }}
             />)
         }
         </div>
