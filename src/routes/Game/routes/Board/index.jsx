@@ -25,10 +25,10 @@ const counterWin = (board, player1, player2) => {
 };
 
 const BoardPage = () => {
-  const {pokemons} = useContext(PokemonContext);
+  const {pokemons1, pokemons2,onSetPokemons2} = useContext(PokemonContext);
   const [board, setBoard] = useState([]);
   const [player1, setPlayer1] = useState(() => {
-    return  Object.values(pokemons).map(item => ({
+    return  Object.values(pokemons1).map(item => ({
       ...item,
       possession: 'blue',
     }))
@@ -53,9 +53,12 @@ const BoardPage = () => {
         possession: 'red',
       }))
     });
+
+    console.log('from db: ', player2Request.data.map(item => ({...item})));
+    onSetPokemons2(player2Request.data.map(item => ({...item})));
   }, []);
 
-  if (Object.keys(pokemons).length === 0) {
+  if (Object.keys(pokemons1).length === 0) {
     history.replace('/game');
   };
 
@@ -93,23 +96,23 @@ const BoardPage = () => {
   };
 
   useEffect(() => {
-    if (steps === 9) {
-      const [count1, count2] = counterWin(board, player1, player2);
-
-      if (count1 > count2) {
-        console.log('win');
-      } else if (count1 < count2) {
-        console.log('lose');
-      } else {
-        console.log('draw');
-      }
+    if (steps === 1) {
+      history.replace('/game/finish');
+      // const [count1, count2] = counterWin(board, player1, player2);
+      //
+      // if (count1 > count2) {
+      //   console.log('win');
+      // } else if (count1 < count2) {
+      //   console.log('lose');
+      // } else {
+      //   console.log('draw');
+      // }
     }
   }, [steps]);
 
   return (
     <div className={s.root}>
       <div className={s.playerOne}>
-        {/*todo: change arr for cards*/}
         <PlayerBoard
           player={1}
           cards={player1}

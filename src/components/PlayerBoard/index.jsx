@@ -12,6 +12,7 @@ const PlayerBoard = ({player, cards, onClickCard}) => {
       {
         cards.map((item) => (
           <div
+            key={item.id}
             className={cn(s.cardBoard, {[s.selected]: isSelected === item.id})}
             onClick={() => {
               setSelected(item.id);
@@ -29,10 +30,7 @@ const PlayerBoard = ({player, cards, onClickCard}) => {
               type={item.type}
               values={item.values}
               isActive
-              // isSelected={item.selected}
-              // classsName={s.card}
               minimize
-              // onPokemonCardClick={handleSelectedCard}
             />
           </div>
         ))
