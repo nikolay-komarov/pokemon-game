@@ -7,6 +7,7 @@ import {PokemonContext} from "../../../../context/pokemonContext";
 
 import s from './style.module.css';
 import PlayerBoard from "../../../../components/PlayerBoard";
+import Result from "../../../../components/Result";
 
 const counterWin = (board, player1, player2) => {
   let player1Count = player1.length;
@@ -36,6 +37,7 @@ const BoardPage = () => {
   const [player2, setPlayer2] = useState([]);
   const [choiceCard, setChoiceCard] = useState(null);
   const [steps, setStep] = useState(0);
+  const [result, setResult] = useState(null);
 
   const history = useHistory();
 
@@ -96,21 +98,24 @@ const BoardPage = () => {
 
   useEffect(() => {
     if (steps === 9) {
-      history.replace('/game/finish');
-      // const [count1, count2] = counterWin(board, player1, player2);
-      //
-      // if (count1 > count2) {
-      //   console.log('win');
-      // } else if (count1 < count2) {
-      //   console.log('lose');
-      // } else {
-      //   console.log('draw');
-      // }
+      const [count1, count2] = counterWin(board, player1, player2);
+
+      if (count1 > count2) {
+        setResult('win');
+      } else if (count1 < count2) {
+        setResult('lose');
+      } else {
+        setResult('draw');
+      }
     }
   }, [steps]);
 
   return (
     <div className={s.root}>
+      {
+        result &&
+        <Result type={result}/>
+      }
       <div className={s.playerOne}>
         <PlayerBoard
           player={1}

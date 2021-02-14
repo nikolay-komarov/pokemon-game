@@ -9,7 +9,6 @@ import cn from 'classnames';
 import {FirebaseContext} from "../../../../context/firebaseContext";
 import {PokemonContext} from "../../../../context/pokemonContext";
 
-
 const FinishPage = () => {
   const history = useHistory();
 
