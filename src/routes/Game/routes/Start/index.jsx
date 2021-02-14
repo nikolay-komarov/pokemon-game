@@ -18,8 +18,6 @@ const StartPage = () => {
   const firebaseContext = useContext(FirebaseContext);
   const pokemonsContext = useContext(PokemonContext);
 
-  console.log('pokemonContext', pokemonsContext);
-
   const [pokemons, setPokemons] = useState({});
 
   useEffect(() => {
