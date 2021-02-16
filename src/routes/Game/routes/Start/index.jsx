@@ -18,8 +18,6 @@ const StartPage = () => {
   const firebaseContext = useContext(FirebaseContext);
   const pokemonsContext = useContext(PokemonContext);
 
-  console.log('pokemonContext', pokemonsContext);
-
   const [pokemons, setPokemons] = useState({});
 
   useEffect(() => {
@@ -48,7 +46,7 @@ const StartPage = () => {
       <div className={s.buttonWrap}>
         <Button
           title="Start Game"
-          disabled={(Object.keys(pokemonsContext.pokemons).length < 5)}
+          disabled={(Object.keys(pokemonsContext.pokemons1).length < 5)}
           onClick={handleStartGameClick}
         />
       </div>
@@ -67,7 +65,7 @@ const StartPage = () => {
               classsName={s.card}
               minimize={false}
               onPokemonCardClick={() => {
-                if ((Object.keys(pokemonsContext.pokemons).length < 5) || item.selected) {
+                if ((Object.keys(pokemonsContext.pokemons1).length < 5) || item.selected) {
                   handleActiveSelected(key)
                 }
               }}
