@@ -4,10 +4,14 @@ import {useHistory} from 'react-router-dom';
 import PokemonCard from "../../../../components/PokemonCard";
 import Button from "../../../../components/Button";
 
-import {FirebaseContext} from "../../../../context/firebaseContext";
 import {PokemonContext} from "../../../../context/pokemonContext";
 
+import {useDispatch, useSelector} from "react-redux";
+import {getPokemonAsync, selectPokemonsData} from "../../../../store/pokemons";
+
 import s from "./style.module.css";
+
+
 
 const StartPage = () => {
   const history = useHistory();
@@ -15,21 +19,26 @@ const StartPage = () => {
     history.push('/game/board');
   };
 
-  const firebaseContext = useContext(FirebaseContext);
   const pokemonsContext = useContext(PokemonContext);
+
+  // todo: add isLoading...
+  // const isLoading = useSelector(selectPokemonsIsLoading);
+  const pokemonsRedux = useSelector(selectPokemonsData);
+  const dispatch = useDispatch();
 
   const [pokemons, setPokemons] = useState({});
 
   useEffect(() => {
-    firebaseContext.getPokemonsSoket((pokemons) => {
-      setPokemons(pokemons);
-    });
-
-    return () => firebaseContext.offPokemonsSoket();
+    dispatch(getPokemonAsync());
   }, []);
+
+  useEffect(() => {
+    setPokemons(pokemonsRedux);
+  }, [pokemonsRedux])
 
   const handleActiveSelected = (key) => {
     const pokemon = {...pokemons[key]};
+
     pokemonsContext.onSelectedPokemons(key, pokemon);
 
     setPokemons((prevState) => ({
@@ -66,7 +75,7 @@ const StartPage = () => {
               minimize={false}
               onPokemonCardClick={() => {
                 if ((Object.keys(pokemonsContext.pokemons1).length < 5) || item.selected) {
-                  handleActiveSelected(key)
+                  handleActiveSelected(key);
                 }
               }}
             />)
