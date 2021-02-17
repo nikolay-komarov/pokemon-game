@@ -12,17 +12,8 @@ import {FirebaseContext} from './context/firebaseContext';
 
 import Firebase from './service/firebase';
 
-import {createStore, bindActionCreators} from "redux";
-import rootReducer, * as actions from "./store/counter";
-
 import s from './style.module.css';
 import cn from 'classnames';
-
-const store = new createStore(rootReducer);
-store.subscribe(() => console.log(store.getState()));
-const {plusAction} = bindActionCreators(actions, store.dispatch);
-plusAction(5);
-
 
 const App = () => {
   const location = useLocation();
