@@ -1,13 +1,16 @@
-import {useContext, useEffect, useState} from 'react';
+import {useEffect, useState} from 'react';
 import {useHistory} from 'react-router-dom';
 
 import PokemonCard from "../../../../components/PokemonCard";
-
-import {PokemonContext} from "../../../../context/pokemonContext";
-
-import s from './style.module.css';
 import PlayerBoard from "../../../../components/PlayerBoard";
 import Result from "../../../../components/Result";
+
+import {useDispatch, useSelector} from "react-redux";
+
+import {selectPokemons1Data} from "../../../../store/pokemons1";
+import {setPokemons2} from "../../../../store/pokemons2";
+
+import s from './style.module.css';
 
 const counterWin = (board, player1, player2) => {
   let player1Count = player1.length;
@@ -26,10 +29,11 @@ const counterWin = (board, player1, player2) => {
 };
 
 const BoardPage = () => {
-  const {pokemons1, pokemons2,onSetPokemons2} = useContext(PokemonContext);
+  const pokemons1Redux = useSelector(selectPokemons1Data);
+
   const [board, setBoard] = useState([]);
   const [player1, setPlayer1] = useState(() => {
-    return  Object.values(pokemons1).map(item => ({
+    return  Object.values(pokemons1Redux).map(item => ({
       ...item,
       possession: 'blue',
     }))
@@ -40,6 +44,8 @@ const BoardPage = () => {
   const [result, setResult] = useState(null);
 
   const history = useHistory();
+
+  const dispatch = useDispatch();
 
   useEffect(async () => {
     const boardResponse = await fetch('https://reactmarathon-api.netlify.app/api/board');
@@ -56,10 +62,10 @@ const BoardPage = () => {
       }))
     });
 
-    onSetPokemons2(player2Request.data.map(item => ({...item})));
+    dispatch(setPokemons2(player2Request.data.map(item => ({...item}))));
   }, []);
 
-  if (Object.keys(pokemons1).length === 0) {
+  if (Object.keys(pokemons1Redux).length === 0) {
     history.replace('/game');
   };
 
