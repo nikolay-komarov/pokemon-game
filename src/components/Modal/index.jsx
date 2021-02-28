@@ -1,4 +1,4 @@
-import {useRef} from 'react';
+import {useRef, useEffect} from 'react';
 
 import s from './style.module.css';
 import cn from 'classnames';
@@ -14,6 +14,10 @@ const Modal = ({isOpen, title, children, onCloseModal}) => {
       handleCloseModal();
     }
   };
+
+  useEffect(() => {
+    document.querySelector('body').style.overflow = isOpen ? 'hidden' : null;
+  }, [isOpen]);
 
   return (
     <div
