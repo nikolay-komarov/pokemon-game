@@ -1,4 +1,6 @@
 import {useState} from 'react';
+import {NotificationManager} from 'react-notifications';
+
 import Menu from "../Menu";
 import Navbar from "../Navbar";
 import Modal from "../Modal";
@@ -14,8 +16,26 @@ const MenuHeader = ({bgActive}) => {
   const handleClickLogin = () => {
     setOpenModal(prevState => !prevState);
   };
-  const handleSubmitLoginForm = (values) => {
-    console.log('set email: ', values);
+  const handleSubmitLoginForm = async ({email, password}) => {
+    const requestOptions = {
+      method: 'POST',
+      body: JSON.stringify({
+        email,
+        password,
+        retunSecurityToken: true,
+      })
+    };
+    const response = await fetch('https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyBXTTR5uk2qfCOOjNs96kT3xboVdJxxMKM', requestOptions)
+      .then(res => res.json());
+
+    console.log('login auth: ', response);
+
+    if (response.hasOwnProperty('error')) {
+      NotificationManager.error(response.error.massage, 'wrong...');
+    } else {
+      NotificationManager.success('success');
+    }
+
   };
 
   return (
