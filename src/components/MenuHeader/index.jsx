@@ -33,9 +33,9 @@ const MenuHeader = ({bgActive}) => {
     if (response.hasOwnProperty('error')) {
       NotificationManager.error(response.error.massage, 'wrong...');
     } else {
+      localStorage.setItem('idToken', response.idToken);
       NotificationManager.success('success');
     }
-
   };
 
   return (
@@ -52,7 +52,7 @@ const MenuHeader = ({bgActive}) => {
       />
       <Modal
         isOpen={isOpenModal}
-        title="Login..."
+        title="Auth..."
         onCloseModal={handleClickLogin}
       >
         <LoginForm

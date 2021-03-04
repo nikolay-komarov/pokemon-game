@@ -9,6 +9,8 @@ import NotFoundPage from "./routes/NotFound";
 import MenuHeader from "./components/MenuHeader";
 import Footer from "./components/Footer";
 
+import PrivateRoute from "./components/PrivateRoute";
+
 import {FirebaseContext} from './context/firebaseContext';
 
 import FirebaseClass from './service/firebase';
@@ -32,9 +34,9 @@ const App = () => {
               <Switch>
                 <Route path="/" exact component={HomePage} />
                 <Route path="/home" render={() => <Redirect to="/" />} />
-                <Route path="/game" component={GamePage} />
-                <Route path="/about" component={AboutPage} />
-                <Route path="/contact" component={ContactPage} />
+                <PrivateRoute path="/game" component={GamePage} />
+                <PrivateRoute path="/about" component={AboutPage} />
+                <PrivateRoute path="/contact" component={ContactPage} />
                 <Route render={() => <Redirect to="/404" />} />
               </Switch>
             </div>

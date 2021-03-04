@@ -53,7 +53,7 @@ const LoginForm = ({onSubmit, isOpen}) => {
       </div>
 
       <Button
-        title="Login..."
+        title="SignIn"
         disabled={false}
       />
     </form>
