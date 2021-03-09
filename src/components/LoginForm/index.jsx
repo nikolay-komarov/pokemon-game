@@ -1,18 +1,20 @@
-import {useState, useEffect, useRef} from 'react';
+import {useState, useEffect} from 'react';
 
 import Input from "../Input";
 import Button from "../Button";
 
-const LoginForm = ({onSubmit, isOpen}) => {
+import s from './style.module.css';
+
+const LoginForm = ({onSubmit, isResetField = false}) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-
-  const formEl = useRef();
+  const [isLogin, setLogin] = useState(true);
 
   const handleSubmit = (evt) => {
     evt.preventDefault();
 
     onSubmit && onSubmit({
+      type: isLogin ? 'signin' : 'signup',
       email,
       password
     });
@@ -22,17 +24,12 @@ const LoginForm = ({onSubmit, isOpen}) => {
   };
 
   useEffect(() => {
-    if (!isOpen) {
-      setEmail('');
-      setPassword('');
-
-      formEl.current.reset();
-    };
-  }, [isOpen]);
+    setEmail('');
+    setPassword('');
+  }, [isResetField]);
 
   return (
     <form
-      ref={formEl}
       onSubmit={handleSubmit}
     >
       <div>
@@ -52,10 +49,17 @@ const LoginForm = ({onSubmit, isOpen}) => {
         />
       </div>
 
-      <Button
-        title="SignIn"
-        disabled={false}
-      />
+      <div className={s.flex}>
+        <Button
+          title={isLogin ? "Login" : "SignUp"}
+          disabled={false}
+        />
+        <div className={s.link}
+          onClick={() => setLogin(prevState => !prevState)}
+        >
+          {!isLogin ? 'Login' : 'Register'}
+        </div>
+      </div>
     </form>
   );
 }
