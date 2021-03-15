@@ -1,23 +1,26 @@
+import {useState} from 'react';
 import {useHistory} from 'react-router-dom';
-import {useContext, useState} from 'react';
+import {useSelector} from "react-redux";
+
 import Button from "../../../../components/Button";
 import PokemonCard from "../../../../components/PokemonCard";
+
+import FirebaseClass from "../../../../service/firebase";
+
+import {selectPokemons2Data} from "../../../../store/pokemons2";
+import {selectPokemons1Data} from "../../../../store/pokemons1";
 
 import s from './style.module.css';
 import cn from 'classnames';
 
-import {FirebaseContext} from "../../../../context/firebaseContext";
-import {PokemonContext} from "../../../../context/pokemonContext";
-
 const FinishPage = () => {
   const history = useHistory();
 
-  const firebaseContext = useContext(FirebaseContext);
-  const pokemonsContext = useContext(PokemonContext);
+  const pokemons1Redux = useSelector(selectPokemons1Data);
+  const pokemons2Redux = useSelector(selectPokemons2Data);
 
-  const player1 = Object.values(pokemonsContext.pokemons1).map(item => ({...item}));
-
-  const [player2, setPlayer2] = useState(() => pokemonsContext.pokemons2.map(item => ({...item, isSelected: false})));
+  const player1 = Object.values(pokemons1Redux).map(item => ({...item}));
+  const [player2, setPlayer2] = useState(() => pokemons2Redux.map(item => ({...item, isSelected: false})));
   const [selectedCard, setSelectedCard] = useState(null);
 
   const handleSelectedCard = (card) => {
@@ -30,7 +33,7 @@ const FinishPage = () => {
   };
 
   const handleEndGameClick = () => {
-    firebaseContext.addPokemon(selectedCard);
+    FirebaseClass.addPokemon(selectedCard);
     history.replace('/game');
   };
 
