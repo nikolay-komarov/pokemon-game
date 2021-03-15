@@ -1,26 +1,53 @@
-.btn {
-    min-width: 100px;
-    font-family: inherit;
-    font-size: 24px;
-    font-weight: normal;
-    line-height: 28px;
-    box-sizing: border-box;
-    border: none;
-    background-color: #ff00ff;
-    padding: 8px 20px;
-    color: #FFFFFF;
+button,
+button:visited {
+    width: 100%;
+    max-width: 240px;
+    padding: 1rem;
+    border: 1px solid #fafafa;
+    color: #fafafa;
+    text-align: center;
+    text-transform: uppercase;
+    font-size: 1rem;
+    transition: all ease-in-out .25s;
     cursor: pointer;
+    box-sizing: border-box;
 }
 
-.btn:hover {
-    background-color: #a001a0;
-}
-
-.btn:focus {
+button,
+button:visited {
+    background: #f300b4;
+    border: 1px solid transparent;
+    color: #fafafa;
+    font-weight: bold;
     outline: none;
 }
 
-.btn:active {
+button:hover {
+    background: transparent;
+    border: 1px solid #f300b4;
+    color: #f300b4;
+    transition: all ease-in-out 0s;
     outline: none;
-    box-shadow: 0 0 0 2px #640164;
+}
+
+button:active {
+    background: transparent;
+    border: 1px solid #f300b4;
+    color: #f300b4;
+    transition: all ease-in-out 0s;
+    outline: none;
+    padding: 1.05rem 1rem calc(.95rem - 1px) calc(1rem - 1px);
+    border-top: 2px solid;
+    border-right: 2px solid;
+}
+
+button:disabled {
+    opacity: .4;
+    cursor: not-allowed;
+}
+
+button:disabled:hover {
+    background: #f300b4;
+    border: 1px solid transparent;
+    color: #fafafa;
 }
