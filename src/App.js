@@ -1,3 +1,5 @@
+import {useEffect} from "react";
+import {useDispatch} from "react-redux";
 import {Switch, Route, useLocation, Redirect} from "react-router-dom";
 import {NotificationContainer} from 'react-notifications';
 
@@ -19,9 +21,16 @@ import s from './style.module.css';
 import 'react-notifications/lib/notifications.css';
 import cn from 'classnames';
 
+import {getUserAsync} from "./store/user";
+
 const App = () => {
   const location = useLocation();
   const isPadding = location.pathname === '/' || location.pathname === '/game/board';
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getUserAsync());
+  }, []);
 
   return (
     <FirebaseContext.Provider value={FirebaseClass}>
