@@ -32,8 +32,7 @@ const Navbar = ({isOpen, bgActive, onClickHamburg, onClickLogin}) => {
             (!isLoadingUser && localId) && (
               <Link
                 className={s.loginWrap}
-                to="/login"
-                // todo: to UserPage
+                to="/user"
               >
                 <UserSVG />
               </Link>

@@ -10,6 +10,7 @@ import ContactPage from "./routes/Contact";
 import NotFoundPage from "./routes/NotFound";
 import MenuHeader from "./components/MenuHeader";
 import Footer from "./components/Footer";
+import UserPage from "./routes/User";
 
 import PrivateRoute from "./components/PrivateRoute";
 
@@ -51,6 +52,7 @@ const App = () => {
                 <PrivateRoute path="/game" component={GamePage} />
                 <PrivateRoute path="/about" component={AboutPage} />
                 <PrivateRoute path="/contact" component={ContactPage} />
+                <PrivateRoute path="/user" component={UserPage} />
                 <Route render={() => <Redirect to="/404" />} />
               </Switch>
             </div>
