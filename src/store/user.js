@@ -8,7 +8,7 @@ export const slice = createSlice({
   },
   reducers: {
     fetchUser: () => ({
-      isLoading: true
+      isLoading: true,
     }),
     updateUser: (state, action) => ({
       isLoading: false,
@@ -23,19 +23,21 @@ export const slice = createSlice({
 
 export const {fetchUser, updateUser, removeUser} = slice.actions;
 
-export const selectUserLoading = state => state.isLoading;
-export const selectUser = state => state.data;
+export const selectUserLoading = state => state.user.isLoading;
+export const selectUser = state => state.user.data;
+export const selectLocalID = state => state.user.data?.localId;
 
 export const getUserAsync = () => async (dispatch) => {
   const idToken = localStorage.getItem('idToken');
   if (idToken) {
     dispatch(fetchUser());
+
     const requestOptions = {
       method: 'POST',
       body: JSON.stringify({
         idToken,
       })
-    }
+    };
 
     const response = await fetch('https://identitytoolkit.googleapis.com/v1/accounts:lookup?key=AIzaSyBXTTR5uk2qfCOOjNs96kT3xboVdJxxMKM', requestOptions)
       .then(res => res.json());
