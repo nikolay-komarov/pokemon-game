@@ -5,6 +5,8 @@ import Menu from "../Menu";
 import Navbar from "../Navbar";
 import Modal from "../Modal";
 import LoginForm from "../LoginForm";
+import {useDispatch} from "react-redux";
+import {getUserAsync, getUserUpdateAsync} from "../../store/user";
 
 const signinSingupUser = async ({email, password, type}) => {
   const requestOptions = {
@@ -31,6 +33,7 @@ const signinSingupUser = async ({email, password, type}) => {
 const MenuHeader = ({bgActive}) => {
   const [isOpen, setOpen] = useState(null);
   const [isOpenModal, setOpenModal] = useState(false);
+  const dispatch = useDispatch();
 
   const handleClickHamburg = () => {
     setOpen(prevState => !prevState);
@@ -61,6 +64,7 @@ const MenuHeader = ({bgActive}) => {
       }
 
       localStorage.setItem('idToken', response.idToken);
+      dispatch(getUserUpdateAsync());
       NotificationManager.success('success');
       handleClickLogin();
     }
