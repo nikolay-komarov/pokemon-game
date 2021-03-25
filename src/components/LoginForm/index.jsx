@@ -18,9 +18,6 @@ const LoginForm = ({onSubmit, isResetField = false}) => {
       email,
       password
     });
-
-    setEmail('');
-    setPassword('');
   };
 
   useEffect(() => {
@@ -38,14 +35,14 @@ const LoginForm = ({onSubmit, isResetField = false}) => {
           name="email"
           value={email}
           label="email"
-          onChange={(evt) => setEmail(evt.target.value)}
+          onChange={setEmail}
         />
         <Input
           type="password"
           name="password"
           value={password}
           label="password"
-          onChange={(evt) => setPassword(evt.target.value)}
+          onChange={setPassword}
         />
       </div>
 

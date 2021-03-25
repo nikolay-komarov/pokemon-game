@@ -69,7 +69,7 @@ const StartPage = () => {
               values={item.values}
               isActive={true}
               isSelected={item.selected}
-              classsName={s.card}
+              className={s.card}
               minimize={false}
               onPokemonCardClick={() => {
                 if ((Object.keys(pokemons1Redux).length < 5) || item.selected) {

@@ -9,7 +9,7 @@ const Input = ({value, label, type="text", name, onChange}) => {
         type={type}
         name={name}
         required
-        onChange={onChange}
+        onChange={(evt) => onChange(evt.target.value)}
       />
       <span className={s.highlight}></span>
       <span className={s.bar}></span>
