@@ -1,5 +1,5 @@
 import {useEffect} from "react";
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {Switch, Route, useLocation, Redirect} from "react-router-dom";
 import {NotificationContainer} from 'react-notifications';
 
@@ -21,9 +21,10 @@ import s from './style.module.css';
 import 'react-notifications/lib/notifications.css';
 import cn from 'classnames';
 
-import {getUserAsync} from "./store/user";
+import {getUserAsync, selectUserLoading} from "./store/user";
 
 const App = () => {
+  const isUserLoading = useSelector(selectUserLoading);
   const location = useLocation();
   const isPadding = location.pathname === '/' || location.pathname === '/game/board';
   const dispatch = useDispatch();
@@ -31,6 +32,10 @@ const App = () => {
   useEffect(() => {
     dispatch(getUserAsync());
   }, []);
+
+  if (isUserLoading) {
+    return 'Loading...';
+  }
 
   return (
     <FirebaseContext.Provider value={FirebaseClass}>
