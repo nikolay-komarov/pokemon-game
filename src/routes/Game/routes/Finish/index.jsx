@@ -61,7 +61,7 @@ const FinishPage = () => {
               type={item.type}
               values={item.values}
               isActive
-              classsName={s.card}
+              className={s.card}
             />
           )
         }
@@ -84,7 +84,7 @@ const FinishPage = () => {
               type={item.type}
               values={item.values}
               isActive
-              classsName={cn(s.card, {[s.selected]: item.isSelected})}
+              className={cn(s.card, {[s.selected]: item.isSelected})}
               onPokemonCardClick={() => {
                 handleSelectedCard(item);
               }}

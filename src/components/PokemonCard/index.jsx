@@ -2,14 +2,14 @@ import cardBackSide from './assets/card-back-side.jpg';
 import s from './style.module.css';
 import cn from 'classnames';
 
-const PokemonCard = ({name, img, id, type, values, isActive, isSelected, minimize, classsName, possession, onPokemonCardClick}) => {
+const PokemonCard = ({name, img, id, type, values, isActive, isSelected, minimize, className, possession, onPokemonCardClick}) => {
   const handleCardClick = () => {
     onPokemonCardClick && onPokemonCardClick(id);
   };
 
   return (
     <div
-      className={cn(classsName, s.pokemonCard, {
+      className={cn(className, s.pokemonCard, {
         [s.active]: isActive,
         [s.selected]: isSelected,
       })}

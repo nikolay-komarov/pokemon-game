@@ -14,10 +14,6 @@ import UserPage from "./routes/User";
 
 import PrivateRoute from "./components/PrivateRoute";
 
-import {FirebaseContext} from './context/firebaseContext';
-
-import FirebaseClass from './service/firebase';
-
 import s from './style.module.css';
 import 'react-notifications/lib/notifications.css';
 import cn from 'classnames';
@@ -39,7 +35,7 @@ const App = () => {
   }
 
   return (
-    <FirebaseContext.Provider value={FirebaseClass}>
+    <>
       <Switch>
         <Route path="/404" component={NotFoundPage} />
         <Route>
@@ -61,7 +57,7 @@ const App = () => {
         </Route>
       </Switch>
       <NotificationContainer />
-    </FirebaseContext.Provider>
+    </>
   );
 };
 

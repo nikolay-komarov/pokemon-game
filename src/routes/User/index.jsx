@@ -35,7 +35,7 @@ const UserPage = () => {
               values={item.values}
               isActive={true}
               isSelected={item.selected}
-              classsName={s.card}
+              className={s.card}
               minimize={false}
             />)
         }
