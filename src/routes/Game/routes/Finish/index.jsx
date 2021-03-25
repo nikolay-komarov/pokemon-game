@@ -5,13 +5,12 @@ import {useSelector} from "react-redux";
 import Button from "../../../../components/Button";
 import PokemonCard from "../../../../components/PokemonCard";
 
-import FirebaseClass from "../../../../service/firebase";
-
 import {selectPokemons2Data} from "../../../../store/pokemons2";
 import {selectPokemons1Data} from "../../../../store/pokemons1";
 
 import s from './style.module.css';
 import cn from 'classnames';
+import {selectLocalID} from "../../../../store/user";
 
 const FinishPage = () => {
   const history = useHistory();
@@ -23,6 +22,8 @@ const FinishPage = () => {
   const [player2, setPlayer2] = useState(() => pokemons2Redux.map(item => ({...item, isSelected: false})));
   const [selectedCard, setSelectedCard] = useState(null);
 
+  const localId = useSelector(selectLocalID);
+
   const handleSelectedCard = (card) => {
     setPlayer2(prevState => (
       prevState.map(item => ({
@@ -32,8 +33,13 @@ const FinishPage = () => {
     setSelectedCard(card);
   };
 
-  const handleEndGameClick = () => {
-    FirebaseClass.addPokemon(selectedCard);
+  const handleEndGameClick = async () => {
+    // todo ?auth=${response.idToken}
+    await fetch(`https://pokemon-game-f1cd5-default-rtdb.firebaseio.com/${localId}/pokemons.json`, {
+      method: 'POST',
+      body: JSON.stringify(selectedCard),
+    });
+
     history.replace('/game');
   };
 
